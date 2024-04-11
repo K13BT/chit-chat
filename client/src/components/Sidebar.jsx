@@ -1,12 +1,20 @@
 import { useState } from "react";
 import { rooms } from "./Rooms";
 import Profile from "./Profile";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faX } from "@fortawesome/free-solid-svg-icons";
 
-const Sidebar = () => {
+const Sidebar = ({ setShowSidebar }) => {
   const [displayUsers, setDisplayUsers] = useState(true);
 
   return (
-    <aside className="relative">
+    <aside className="lg:relative absolute h-full z-20 top-0 bottom-0 left-0 bg-white lg:p-0 p-4">
+      <button
+        className="text-2xl my-5 lg:hidden"
+        onClick={() => setShowSidebar(false)}
+      >
+        <FontAwesomeIcon icon={faX} />
+      </button>
       <div className="grid grid-cols-2 gap-2">
         <button
           onClick={() => setDisplayUsers(true)}

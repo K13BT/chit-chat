@@ -20,7 +20,7 @@ const LoginForm = ({ setLoggedIn }) => {
     <form className="grid gap-10" onSubmit={handleSubmit}>
       <input
         type="text"
-        className="text-center p-2"
+        className="text-center p-2 focus:outline-none focus:shadow-lg"
         placeholder="Enter a username..."
         onChange={(e) => setUsername(e.target.value)}
         value={username}

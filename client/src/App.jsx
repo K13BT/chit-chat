@@ -6,7 +6,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(true);
 
   return (
-    <div>
+    <div className="relative min-h-screen">
       {loggedIn ? (
         <ChatRoom setLoggedIn={setLoggedIn} />
       ) : (
