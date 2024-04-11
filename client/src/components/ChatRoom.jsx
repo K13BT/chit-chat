@@ -3,10 +3,12 @@ import Messages from "./Messages";
 import ChatForm from "./ChatForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ChatContext } from "../App";
 
 const ChatRoom = ({ setLoggedIn }) => {
   const [showSidebar, setShowSidebar] = useState(false);
+  const { userInfo } = useContext(ChatContext);
 
   const handleLeaveRoom = () => {
     setLoggedIn(false);
@@ -31,7 +33,9 @@ const ChatRoom = ({ setLoggedIn }) => {
           >
             <FontAwesomeIcon icon={faBars} />
           </button>
-          <h1 className="lg:text-4xl md:text-2xl text-xl text-white">Trivia</h1>
+          <h1 className="lg:text-4xl md:text-2xl text-xl text-white">
+            {userInfo.room}
+          </h1>
 
           <button
             onClick={handleLeaveRoom}

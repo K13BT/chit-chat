@@ -1,15 +1,22 @@
 import { useState } from "react";
 import { rooms } from "./Rooms";
+import { socket } from "../socket";
+import { useContext } from "react";
+import { ChatContext } from "../App";
 
 const LoginForm = ({ setLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("Trivia");
+  const { setUserInfo } = useContext(ChatContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (username) {
       setLoggedIn(true);
+      socket.connect();
+      socket.emit("joinRoom", username, room);
+      setUserInfo({ username, room });
     }
 
     setUsername("");

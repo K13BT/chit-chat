@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { rooms } from "./Rooms";
 import Profile from "./Profile";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
+import { ChatContext } from "../App";
 
 const Sidebar = ({ setShowSidebar }) => {
   const [displayUsers, setDisplayUsers] = useState(true);
+  const { allUsers, userInfo } = useContext(ChatContext);
 
   return (
     <aside className="lg:relative absolute h-full z-20 top-0 bottom-0 left-0 bg-white lg:p-0 p-4">
@@ -32,8 +34,9 @@ const Sidebar = ({ setShowSidebar }) => {
 
       {displayUsers ? (
         <ul>
-          <li>John Doe</li>
-          <li>Jane Doe</li>
+          {allUsers[userInfo.room].map((user) => (
+            <li>{user.username}</li>
+          ))}
         </ul>
       ) : (
         <menu id="rooms" className="grid gap-4">
