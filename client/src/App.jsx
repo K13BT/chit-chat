@@ -51,14 +51,40 @@ function App() {
       setUserInfo({ ...userInfo, id: socket.id });
     };
 
+    const disconnect = () => {
+      setMessages({
+        Trivia: [],
+        Technology: [],
+        Games: [],
+        Entertainment: [],
+        Books: [],
+        Fitness: [],
+        Art: [],
+        Music: [],
+      });
+      setAllUsers({
+        Trivia: [],
+        Technology: [],
+        Games: [],
+        Entertainment: [],
+        Books: [],
+        Fitness: [],
+        Art: [],
+        Music: [],
+      });
+      setUserInfo({});
+    };
+
     socket.on("allUsers", getAllUsers);
     socket.on("message", receiveMessage);
     socket.on("connect", connect);
+    socket.on("disconnect", disconnect);
 
     return () => {
       socket.off("allUsers", allUsers);
       socket.off("message", receiveMessage);
       socket.off("connect", connect);
+      socket.off("disconnect", disconnect);
     };
   }, [userInfo, messages, allUsers]);
 
