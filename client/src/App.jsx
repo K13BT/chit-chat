@@ -31,42 +31,32 @@ function App() {
   });
 
   useEffect(() => {
-    const newUserJoin = (message) => {
-      const newMessages = {
-        ...messages,
-        [userInfo.room]: [...messages[userInfo.room], message],
-      };
-      setMessages(newMessages);
-    };
-
     const getAllUsers = (users) => {
       const newUsers = {
         ...allUsers,
         [userInfo.room]: users,
       };
       setAllUsers(newUsers);
-      console.log(users);
     };
 
-    const userLeave = (message) => {
+    const receiveMessage = (message) => {
       const newMessages = {
         ...messages,
         [userInfo.room]: [...messages[userInfo.room], message],
       };
       setMessages(newMessages);
+      console.log([...messages[userInfo.room]]);
       console.log(newMessages);
     };
 
-    socket.on("newUserJoin", newUserJoin);
     socket.on("allUsers", getAllUsers);
-    socket.on("userLeave", userLeave);
+    socket.on("message", receiveMessage);
 
     return () => {
-      socket.off("newUserJoin", newUserJoin);
       socket.off("allUsers", allUsers);
-      socket.off("userLeave", userLeave);
+      socket.off("message", receiveMessage);
     };
-  }, [userInfo]);
+  }, [userInfo, messages, allUsers]);
 
   return (
     <ChatContext.Provider

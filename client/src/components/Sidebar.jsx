@@ -1,10 +1,20 @@
 import { useContext, useState } from "react";
-import { rooms } from "./Rooms";
 import Profile from "./Profile";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { ChatContext } from "../App";
 import { socket } from "../socket";
+
+export const rooms = [
+  "Trivia",
+  "Technology",
+  "Games",
+  "Entertainment",
+  "Books",
+  "Fitness",
+  "Art",
+  "Music",
+];
 
 const Sidebar = ({ setShowSidebar }) => {
   const [displayUsers, setDisplayUsers] = useState(true);

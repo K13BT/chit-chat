@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { rooms } from "./Rooms";
+import { rooms } from "./Sidebar";
 import { socket } from "../socket";
 import { useContext } from "react";
 import { ChatContext } from "../App";

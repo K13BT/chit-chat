@@ -21,7 +21,7 @@ io.on("connection", (socket) => {
 
     rooms[room].push({ username, room });
     socket.join(room);
-    io.to(room).emit("newUserJoin", {
+    io.to(room).emit("message", {
       username,
       time: new Date().toLocaleTimeString(),
       message: `${username} entered the chat.`,
@@ -31,11 +31,19 @@ io.on("connection", (socket) => {
     console.log(rooms);
   });
 
+  socket.on("message", (room, message) => {
+    io.to(room).emit("message", {
+      username: socket.username,
+      time: new Date().toLocaleTimeString(),
+      message,
+    });
+  });
+
   socket.on("disconnect", () => {
     socket.userRooms.forEach((room) => {
-      socket.broadcast.to(room).emit("userLeave", {
+      socket.broadcast.to(room).emit("message", {
         username: "bot",
-        id: socket.id,
+        time: new Date().toLocaleTimeString(),
         message: `${socket.username} left the chat.`,
       });
       const index = rooms[room].indexOf(socket.username);

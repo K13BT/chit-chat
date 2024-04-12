@@ -1,13 +1,18 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { socket } from "../socket";
+import { ChatContext } from "../App";
 
 const ChatForm = () => {
   const [message, setMessage] = useState("");
+  const { userInfo } = useContext(ChatContext);
 
   const handleMessageSubmit = (e) => {
     e.preventDefault();
-    console.log(message);
+    if (message) {
+      socket.emit("message", userInfo.room, message);
+    }
     setMessage("");
   };
 
