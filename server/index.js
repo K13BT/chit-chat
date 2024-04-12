@@ -13,8 +13,12 @@ const { rooms } = require("./data");
 
 io.on("connection", (socket) => {
   console.log("New connection.");
+  socket.userRooms = [];
 
   socket.on("joinRoom", (username, room) => {
+    socket.username = username;
+    socket.userRooms = [...socket.userRooms, room];
+
     rooms[room].push({ username, room });
     socket.join(room);
     io.to(room).emit("newUserJoin", {
@@ -28,7 +32,17 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("Disconnected.");
+    socket.userRooms.forEach((room) => {
+      socket.broadcast.to(room).emit("userLeave", {
+        username: "bot",
+        id: socket.id,
+        message: `${socket.username} left the chat.`,
+      });
+      const index = rooms[room].indexOf(socket.username);
+      rooms[room].splice(index, 1);
+      socket.broadcast.to(room).emit("allUsers", rooms[room]);
+    });
+    console.log(rooms);
   });
 });
 

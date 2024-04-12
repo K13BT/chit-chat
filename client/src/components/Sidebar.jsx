@@ -4,10 +4,16 @@ import Profile from "./Profile";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { ChatContext } from "../App";
+import { socket } from "../socket";
 
 const Sidebar = ({ setShowSidebar }) => {
   const [displayUsers, setDisplayUsers] = useState(true);
-  const { allUsers, userInfo } = useContext(ChatContext);
+  const { allUsers, userInfo, setUserInfo } = useContext(ChatContext);
+
+  const handleRoomJoin = (newRoom) => {
+    socket.emit("joinRoom", userInfo.username, newRoom);
+    setUserInfo({ ...userInfo, room: newRoom });
+  };
 
   return (
     <aside className="lg:relative absolute h-full z-20 top-0 bottom-0 left-0 bg-white lg:p-0 p-4">
@@ -34,15 +40,17 @@ const Sidebar = ({ setShowSidebar }) => {
 
       {displayUsers ? (
         <ul>
-          {allUsers[userInfo.room].map((user) => (
-            <li>{user.username}</li>
+          {allUsers[userInfo.room].map((user, index) => (
+            <li key={index}>{user.username}</li>
           ))}
         </ul>
       ) : (
         <menu id="rooms" className="grid gap-4">
-          {rooms.map((room) => (
-            <li className="">
-              <button className="">{room}</button>
+          {rooms.map((room, index) => (
+            <li className="" key={index}>
+              <button className="" onClick={() => handleRoomJoin(room)}>
+                {room}
+              </button>
             </li>
           ))}
         </menu>

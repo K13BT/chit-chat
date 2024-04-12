@@ -31,14 +31,13 @@ function App() {
   });
 
   useEffect(() => {
-    function newUserJoin(message) {
+    const newUserJoin = (message) => {
       const newMessages = {
         ...messages,
         [userInfo.room]: [...messages[userInfo.room], message],
       };
       setMessages(newMessages);
-      console.log(newMessages);
-    }
+    };
 
     const getAllUsers = (users) => {
       const newUsers = {
@@ -46,21 +45,40 @@ function App() {
         [userInfo.room]: users,
       };
       setAllUsers(newUsers);
+      console.log(users);
+    };
 
-      console.log(newUsers);
+    const userLeave = (message) => {
+      const newMessages = {
+        ...messages,
+        [userInfo.room]: [...messages[userInfo.room], message],
+      };
+      setMessages(newMessages);
+      console.log(newMessages);
     };
 
     socket.on("newUserJoin", newUserJoin);
     socket.on("allUsers", getAllUsers);
+    socket.on("userLeave", userLeave);
 
     return () => {
       socket.off("newUserJoin", newUserJoin);
       socket.off("allUsers", allUsers);
+      socket.off("userLeave", userLeave);
     };
   }, [userInfo]);
 
   return (
-    <ChatContext.Provider value={{ messages, userInfo, setUserInfo, allUsers }}>
+    <ChatContext.Provider
+      value={{
+        messages,
+        userInfo,
+        setUserInfo,
+        allUsers,
+        setMessages,
+        setAllUsers,
+      }}
+    >
       <div className="relative min-h-screen">
         {loggedIn ? (
           <ChatRoom setLoggedIn={setLoggedIn} />

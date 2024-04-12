@@ -5,13 +5,37 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useState } from "react";
 import { ChatContext } from "../App";
+import { socket } from "../socket";
 
 const ChatRoom = ({ setLoggedIn }) => {
   const [showSidebar, setShowSidebar] = useState(false);
-  const { userInfo } = useContext(ChatContext);
+  const { userInfo, setMessages, setUserInfo, setAllUsers } =
+    useContext(ChatContext);
 
   const handleLeaveRoom = () => {
+    socket.disconnect();
     setLoggedIn(false);
+    setMessages({
+      Trivia: [],
+      Technology: [],
+      Games: [],
+      Entertainment: [],
+      Books: [],
+      Fitness: [],
+      Art: [],
+      Music: [],
+    });
+    setAllUsers({
+      Trivia: [],
+      Technology: [],
+      Games: [],
+      Entertainment: [],
+      Books: [],
+      Fitness: [],
+      Art: [],
+      Music: [],
+    });
+    setUserInfo({});
   };
 
   return (
@@ -33,7 +57,7 @@ const ChatRoom = ({ setLoggedIn }) => {
           >
             <FontAwesomeIcon icon={faBars} />
           </button>
-          <h1 className="lg:text-4xl md:text-2xl text-xl text-white">
+          <h1 className="lg:text-4xl text-center md:text-2xl text-xl text-white">
             {userInfo.room}
           </h1>
 
