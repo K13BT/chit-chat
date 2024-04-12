@@ -9,7 +9,7 @@ const io = new Server(server, {
   },
 });
 
-const { rooms } = require("./data");
+const { rooms, Message } = require("./data");
 
 io.on("connection", (socket) => {
   console.log("New connection.");
@@ -19,41 +19,33 @@ io.on("connection", (socket) => {
     socket.username = username;
     socket.userRooms = [...socket.userRooms, room];
 
-    rooms[room].push({ username, room });
+    rooms[room].push({ username, room, id: socket.id });
     socket.join(room);
-    io.to(room).emit("message", {
-      username,
-      time: new Date().toLocaleTimeString(),
-      message: `${username} entered the chat.`,
-    });
-
+    const newMessage = new Message("bot", "", `${username} entered the chat`);
+    io.to(room).emit("message", newMessage);
     io.to(room).emit("allUsers", rooms[room]);
-    console.log(rooms);
   });
 
   socket.on("message", (room, message) => {
-    io.to(room).emit("message", {
-      username: socket.username,
-      time: new Date().toLocaleTimeString(),
-      message,
-    });
+    const newMessage = new Message(socket.username, socket.id, message);
+    io.to(room).emit("message", newMessage);
   });
 
   socket.on("disconnect", () => {
     socket.userRooms.forEach((room) => {
-      socket.broadcast.to(room).emit("message", {
-        username: "bot",
-        time: new Date().toLocaleTimeString(),
-        message: `${socket.username} left the chat.`,
-      });
-      const index = rooms[room].indexOf(socket.username);
+      const newMessage = new Message(
+        "bot",
+        "",
+        `${socket.username} left the chat.`
+      );
+      socket.broadcast.to(room).emit("message", newMessage);
+      const index = rooms[room].indexOf(socket.id);
       rooms[room].splice(index, 1);
       socket.broadcast.to(room).emit("allUsers", rooms[room]);
     });
-    console.log(rooms);
   });
 });
 
 server.listen(8000, () => {
-  console.log("listening on PORT 3000");
+  console.log("Listening on PORT 8000");
 });

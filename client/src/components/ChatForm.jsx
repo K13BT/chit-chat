@@ -18,16 +18,17 @@ const ChatForm = () => {
 
   return (
     <form
-      className="flex text-lg gap-2 absolute bottom-5 right-0 left-0"
+      className="flex text-lg gap-2 bg-white py-2"
       onSubmit={handleMessageSubmit}
     >
       <input
         type="text"
         placeholder="write something..."
-        className="border-2 border-slate-400 rounded-lg p-2 flex-grow"
+        className="border-2 border-slate-400 rounded-lg p-2 flex-grow focus:outline-none focus:shadow-lg"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         required
+        spellCheck="false"
       />
       <button className="bg-black px-5 py-4 rounded-lg">
         <FontAwesomeIcon icon={faPaperPlane} className="text-white" />

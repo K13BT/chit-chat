@@ -6,16 +6,14 @@ import { ChatContext } from "../App";
 const Profile = () => {
   const { userInfo } = useContext(ChatContext);
   return (
-    <div className="absolute bottom-4">
-      <div className="flex gap-4 items-center">
+    <div className="bg-white">
+      <div className="flex gap-4 items-center justify-start px-4">
         <FontAwesomeIcon
           icon={faUser}
           className="bg-black text-white p-2 rounded-full"
         />
-        <p>{userInfo.username}</p>
+        <p className="text-xl font-semibold">{userInfo.username}</p>
       </div>
-
-      <p className="text-end">{new Date().toLocaleTimeString()}</p>
     </div>
   );
 };

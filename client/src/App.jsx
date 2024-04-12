@@ -45,16 +45,20 @@ function App() {
         [userInfo.room]: [...messages[userInfo.room], message],
       };
       setMessages(newMessages);
-      console.log([...messages[userInfo.room]]);
-      console.log(newMessages);
+    };
+
+    const connect = () => {
+      setUserInfo({ ...userInfo, id: socket.id });
     };
 
     socket.on("allUsers", getAllUsers);
     socket.on("message", receiveMessage);
+    socket.on("connect", connect);
 
     return () => {
       socket.off("allUsers", allUsers);
       socket.off("message", receiveMessage);
+      socket.off("connect", connect);
     };
   }, [userInfo, messages, allUsers]);
 
@@ -69,7 +73,7 @@ function App() {
         setAllUsers,
       }}
     >
-      <div className="relative min-h-screen">
+      <div className="relative h-screen">
         {loggedIn ? (
           <ChatRoom setLoggedIn={setLoggedIn} />
         ) : (
