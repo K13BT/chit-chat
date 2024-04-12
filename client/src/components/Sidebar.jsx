@@ -4,24 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { ChatContext } from "../App";
 import { socket } from "../socket";
-
-export const rooms = [
-  "Trivia",
-  "Technology",
-  "Games",
-  "Entertainment",
-  "Books",
-  "Fitness",
-  "Art",
-  "Music",
-];
+import { rooms } from "../rooms";
 
 const Sidebar = ({ setShowSidebar }) => {
   const [displayUsers, setDisplayUsers] = useState(true);
   const { allUsers, userInfo, setUserInfo } = useContext(ChatContext);
 
   const handleRoomJoin = (newRoom) => {
-    console.log(allUsers[newRoom]);
     const user = allUsers[newRoom].find((user) => user.id === userInfo.id);
     setUserInfo({ ...userInfo, room: newRoom });
     if (user) {
