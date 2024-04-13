@@ -1,12 +1,11 @@
 import Sidebar from "./Sidebar";
 import Messages from "./Messages";
 import ChatForm from "./ChatForm";
-import { useContext, useState } from "react";
-import { ChatContext } from "../App";
+import { useState } from "react";
 import { socket } from "../socket";
 import Header from "./Header";
 
-const ChatRoom = ({ setLoggedIn }) => {
+const ChatRoom = () => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   const handleLeaveRoom = () => {
