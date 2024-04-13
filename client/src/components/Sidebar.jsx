@@ -12,11 +12,11 @@ const Sidebar = ({ setShowSidebar }) => {
 
   const handleRoomJoin = (newRoom) => {
     const user = allUsers[newRoom].find((user) => user.id === userInfo.id);
+    setUserInfo({ ...userInfo, room: newRoom });
     if (user) {
       return;
     }
     socket.emit("joinRoom", userInfo.username, newRoom);
-    setUserInfo({ ...userInfo, room: newRoom });
   };
 
   return (
