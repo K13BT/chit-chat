@@ -3,9 +3,14 @@ const app = express();
 const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
+
+const origin =
+  process.env.NODE_ENV === "production"
+    ? process.env.ORIGIN
+    : "http://localhost:3000";
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin,
   },
 });
 
@@ -46,6 +51,7 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(8000, () => {
-  console.log("Listening on PORT 8000");
+const PORT = process.env.PORT || 8000;
+server.listen(PORT, () => {
+  console.log("Listening on PORT" + PORT);
 });
