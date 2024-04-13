@@ -27,7 +27,7 @@ const Sidebar = ({ setShowSidebar }) => {
       >
         <FontAwesomeIcon icon={faX} />
       </button>
-      <div className="grid grid-cols-2 gap-2 fixed top-10 lg:top-0 left-0 lg:w-3/12 w-1/2 bg-white">
+      <div className="grid grid-cols-2 gap-2 fixed top-10 lg:top-0 left-0 lg:w-3/12 w-1/2 bg-white z-20">
         <button
           onClick={() => setDisplayUsers(true)}
           className={`text-center text-white p-3 text-lg ${
@@ -47,29 +47,30 @@ const Sidebar = ({ setShowSidebar }) => {
       </div>
 
       {displayUsers ? (
-        <ul className="py-5 grid gap-3 absolute top-20 bottom-10 lg:w-3/12 left-0 w-1/2">
-          {allUsers[userInfo.room].map((user, index) => (
-            <li
-              className="text-lg border-b-2 p-1 border-b-gray-600"
-              key={index}
-            >
-              {user.username}
-            </li>
-          ))}
-        </ul>
+        <div className="py-5 absolute top-20 bottom-10 left-0 w-full p-4  overflow-y-auto">
+          <ul className="grid gap-4 w-full">
+            {allUsers[userInfo.room].map((user, index) => (
+              <li
+                className="text-lg border-b-2 p-1 border-b-gray-600"
+                key={index}
+              >
+                {user.username}
+              </li>
+            ))}
+          </ul>
+        </div>
       ) : (
-        <menu
-          id="rooms"
-          className="grid gap-4 py-5 absolute top-20 bottom-10 lg:w-3/12 left-0 w-1/2"
-        >
-          {rooms.map((room, index) => (
-            <li className="text-lg bg-gray-200 p-1 rounded-md" key={index}>
-              <button onClick={() => handleRoomJoin(room)} className="w-full">
-                {room}
-              </button>
-            </li>
-          ))}
-        </menu>
+        <div className="py-5 absolute top-28 lg:top-20 bottom-10 left-0 w-full p-4  overflow-y-auto">
+          <menu className="grid gap-4 w-full">
+            {rooms.map((room, index) => (
+              <li className="text-lg bg-gray-200 p-1 rounded-md" key={index}>
+                <button onClick={() => handleRoomJoin(room)} className="w-full">
+                  {room}
+                </button>
+              </li>
+            ))}
+          </menu>
+        </div>
       )}
 
       <Profile />

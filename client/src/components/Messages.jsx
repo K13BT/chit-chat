@@ -11,16 +11,19 @@ const Messages = () => {
   }, [messages]);
 
   return (
-    <div className=" absolute top-20 bottom-20 right-0 left-0" ref={chatScroll}>
-      <ul className="grid grid-cols-2 gap-y-5">
+    <div
+      className=" absolute top-20 bottom-20 py-2 right-0 left-0 p-1 overflow-y-auto"
+      ref={chatScroll}
+    >
+      <ul className="grid gap-y-5">
         {messages[userInfo.room].map((message, index) => (
           <li
             key={index}
             className={`${
               message.id === userInfo.id
-                ? "justify-self-end col-start-2 bg-black text-white"
+                ? "justify-self-end bg-black text-white"
                 : message.id === ""
-                ? "justify-self-center col-span-2 bg-gray-100"
+                ? "justify-self-center bg-gray-100"
                 : "justify-self-start bg-gray-200"
             } rounded-md py-2 px-4`}
           >
