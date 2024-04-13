@@ -6,7 +6,7 @@ const { Server } = require("socket.io");
 
 const origin =
   process.env.NODE_ENV === "production"
-    ? process.env.ORIGIN
+    ? "https://chit-chat-gules.vercel.app/"
     : "http://localhost:3000";
 const io = new Server(server, {
   cors: {
@@ -53,5 +53,5 @@ io.on("connection", (socket) => {
 
 const PORT = process.env.PORT || 8000;
 server.listen(PORT, () => {
-  console.log("Listening on PORT" + PORT);
+  console.log("Listening on PORT " + PORT);
 });
