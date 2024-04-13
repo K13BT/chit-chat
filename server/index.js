@@ -6,7 +6,7 @@ const { Server } = require("socket.io");
 
 const origin =
   process.env.NODE_ENV === "production"
-    ? "https://chit-chat-gules.vercel.app/"
+    ? "https://chit-chat-gules.vercel.app"
     : "http://localhost:3000";
 const io = new Server(server, {
   cors: {
