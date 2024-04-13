@@ -6,7 +6,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 const Header = ({ handleLeaveRoom, setShowSidebar }) => {
   const { userInfo } = useContext(ChatContext);
   return (
-    <header className="grid lg:grid-cols-2 grid-cols-3 items-center bg-black p-4 mb-4 rounded-lg">
+    <header className="grid lg:grid-cols-2 grid-cols-3 items-center bg-black p-4 mb-4 fixed lg:w-8/12 top-0 right-0 w-full z-10">
       <button
         className="text-white text-2xl lg:hidden justify-self-start"
         onClick={() => setShowSidebar(true)}

@@ -52,6 +52,7 @@ function App() {
     };
 
     const disconnect = () => {
+      setLoggedIn(false);
       setMessages({
         Trivia: [],
         Technology: [],

@@ -6,7 +6,7 @@ import { ChatContext } from "../App";
 const Profile = () => {
   const { userInfo } = useContext(ChatContext);
   return (
-    <div className="bg-white">
+    <div className="bg-white fixed bottom-0 left-0 lg:w-3/12 w-1/2 p-4">
       <div className="flex gap-4 items-center justify-start px-4">
         <FontAwesomeIcon
           icon={faUser}

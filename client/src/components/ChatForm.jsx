@@ -18,7 +18,7 @@ const ChatForm = () => {
 
   return (
     <form
-      className="flex text-lg gap-2 bg-white py-2"
+      className="flex text-lg gap-2 bg-white py-2 fixed bottom-0 right-0 lg:w-8/12 w-full"
       onSubmit={handleMessageSubmit}
     >
       <input
